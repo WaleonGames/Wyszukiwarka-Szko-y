@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukiwarka Szkół</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Stylizacja dla komunikatu cookie */
+        .cookie {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <%- include('partials/header') %>
+
+    <!-- Hero Section: Wyszukiwarka -->
+    <div class="hero bg-primary text-white py-5">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Wyszukaj Szkołę Twoją</h1>
+            <p class="lead mb-4">Znajdź szkoły w Twojej okolicy i sprawdź, jakie usługi oferują.</p>
+            <div class="card shadow-sm p-4 mx-auto" style="max-width: 600px;">
+                <form action="/search" method="POST" class="row g-3">
+                    <div class="col-md-12">
+                        <label for="nazwa" class="form-label">Nazwa szkoły</label>
+                        <input type="text" name="nazwa" id="nazwa" class="form-control">
+                    </div>
+            
+                    <div class="col-md-12">
+                        <label for="miasto" class="form-label">* Miasto</label>
+                        <input type="text" name="miasto" id="miasto" class="form-control" required>
+                        <div id="miastoWarning" class="text-danger mt-2" style="display: none;">
+                            Proszę podać miasto.
+                        </div>
+                    </div>
+            
+                    <div class="col-md-12">
+                        <label for="typ" class="form-label">Typ szkoły</label>
+                        <select name="typ" id="typ" class="form-select">
+                            <option value="">Wybierz typ</option>
+                            <option value="sp">Szkoła Podstawowa (SP)</option>
+                            <option value="zs">Zespół Szkół Specjalnych (ZS)</option>
+                            <option value="lo">Liceum Ogólnokształcące (LO)</option>
+                        </select>
+                    </div>
+            
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-light w-100">Szukaj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">O Projekcie</h2>
+        <p class="lead text-center">Wasza szkoła to platforma umożliwiająca łatwe i szybkie znalezienie szkół w twoim mieście!. Wyszukuj szkoły według nazwy, miasta i typu, oraz sprawdź dostępne usługi, takie jak sklepik szkolny, przewozy czy pomoc dla osób niepełnosprawnych.</p>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="bg-light py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Statystyki</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-4">
+                        <h4>Liczba szkół</h4>
+                        <p class="display-4"><%= liczbaSzkół %></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-4">
+                        <h4>Liczba miast</h4>
+                        <p class="display-4"><%= liczbaMiast %></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-4">
+                        <h4>Liczba odwiedzin</h4>
+                        <p class="display-4"><%= liczbaOdwiedzin %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Now Section -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Dołącz do Nas</h2>
+        <p class="lead text-center">Chciałbyś, aby Twoja szkoła pojawiła się w naszej wyszukiwarce? Dołącz do projektu już teraz i pomóż nam stworzyć pełną bazę szkół!</p>
+        <div class="text-center">
+            <a href="/join" class="btn btn-primary btn-lg">Dołącz teraz</a>
+        </div>
+    </div>
+
+    <!-- Komunikat o cookies -->
+    <%- include('partials/cookie') %>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!-- Komunikat o cookies -->
+<div class="cookie" id="cookieMessage">
+    <p>
+        Ta strona korzysta z plików cookie. Korzystając z niej, zgadzasz się na ich użycie.
+        <button class="btn btn-primary btn-sm" id="acceptCookies">Zgoda</button>
+    </p>
+</div>
+
+<script>
+    // Funkcja do ustawiania cookies
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Funkcja do sprawdzania cookies
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Sprawdzenie czy użytkownik zaakceptował cookies
+    if (getCookie("cookieConsent") === "true") {
+        document.getElementById("cookieMessage").style.display = "none";  // Ukryj komunikat
+    }
+
+    // Zapisanie zgody na cookies po kliknięciu przycisku
+    document.getElementById("acceptCookies").addEventListener("click", function() {
+        setCookie("cookieConsent", "true", 365);  // Zapisz cookie na 365 dni
+        document.getElementById("cookieMessage").style.display = "none";  // Ukryj komunikat
+    });
+</script>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Szkół - Panel Administratora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('partials/aside') %> <!-- Menu boczne (aside) -->
+
+            <!-- Główna część (content) -->
+            <main class="col-md-9">
+                <div class="container mt-5">
+                    <h2>Lista Szkół</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nazwa szkoły</th>
+                                <th>Miasto</th>
+                                <th>Typ</th>
+                                <th>Opcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% schools.forEach(szkola => { %>
+                                <tr>
+                                    <td><%= szkola.nazwa %></td>
+                                    <td><%= szkola.miasto %></td>
+                                    <td><%= szkola.typ %></td>
+                                    <td>
+                                        <a href="/admin/edit/<%= szkola.id %>" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Edytuj
+                                        </a>
+                                        <a href="/admin/delete/<%= szkola.id %>" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Usuń
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <a href="/admin/add" class="btn btn-success mt-4">
+                        <i class="fas fa-plus-circle"></i> Dodaj nową szkołę
+                    </a>
+                </div>
+
+                <div class="container mt-5">
+                    <h2>Lista Zgłoszeń</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Szkoła</th>
+                                <th>Opis Zgłoszenia</th>
+                                <th>Data Zgłoszenia</th>
+                                <th>Opcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% zgłoszenia.forEach(zgloszenie => { %>
+                                <tr>
+                                    <td><%= zgloszenie.nazwa_szkola %></td>
+                                    <td><%= zgloszenie.opis %></td>
+                                    <td>
+                                        <%= new Date(zgloszenie.data_zgloszenia).toLocaleString('pl-PL', { weekday: 'long', hour: '2-digit', minute: '2-digit' }) %>
+                                    </td>                                    
+                                    <td>
+                                        <!-- Przycisk do sprawdzenia zgłoszenia -->
+                                        <a href="/admin/zgloszenie/<%= zgloszenie.id %>/views" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-search"></i> Sprawdz
+                                        </a>
+                                        <!-- Przycisk do usunięcia zgłoszenia -->
+                                        <a href="/admin/zgloszenie/<%= zgloszenie.id %>/delete" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Usuń
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>                
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

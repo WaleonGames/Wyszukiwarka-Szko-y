@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edytuj Szkołę</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Dodatkowy plik CSS -->
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Menu boczne (aside) -->
+            <aside class="col-md-3 sidebar">
+                <h4>Panel Administratora</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/schools">
+                            <i class="fas fa-school"></i> Lista Szkół
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/settings">
+                            <i class="fas fa-cogs"></i> Ustawienia
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/logout">
+                            <i class="fas fa-sign-out-alt"></i> Wyloguj się
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            
+            <!-- Główna część (content) -->
+            <main class="col-md-9">
+                <div class="container mt-5">
+                    <h2>Edytuj Szkołę</h2>
+                    <form action="/admin/edit/<%= school.id %>" method="POST">
+                        <!-- Nazwa szkoły -->
+                        <div class="mb-3">
+                            <label for="nazwa" class="form-label">Nazwa szkoły</label>
+                            <input type="text" class="form-control" id="nazwa" name="nazwa" value="<%= school.nazwa %>" required>
+                        </div>
+
+                        <!-- Miasto -->
+                        <div class="mb-3">
+                            <label for="miasto" class="form-label">Miasto</label>
+                            <input type="text" class="form-control" id="miasto" name="miasto" value="<%= school.miasto %>" required>
+                        </div>
+
+                        <!-- Typ szkoły -->
+                        <div class="mb-3">
+                            <label for="typ" class="form-label">Typ szkoły</label>
+                            <select class="form-select" id="typ" name="typ" required>
+                                <option value="sp" <%= school.typ === 'sp' ? 'selected' : '' %>>Szkoła Podstawowa</option>
+                                <option value="zs" <%= school.typ === 'zs' ? 'selected' : '' %>>Zespół Szkół</option>
+                                <option value="lo" <%= school.typ === 'lo' ? 'selected' : '' %>>Liceum Ogólnokształcące</option>
+                            </select>
+                        </div>
+
+                        <!-- Grupa dla Szerokości i Długości geograficznej -->
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                <label for="szerokosc" class="form-label">Szerokość geograficzna</label>
+                                <input type="number" step="any" class="form-control" id="szerokosc" name="szerokosc" value="<%= school.szerokosc %>" required>
+                                <small class="form-text text-muted">Podaj szerokość geograficzną w formacie dziesiętnym (np. 52.2298). Wartość dodatnia to północ, ujemna to południe.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dlugosc" class="form-label">Długość geograficzna</label>
+                                <input type="number" step="any" class="form-control" id="dlugosc" name="dlugosc" value="<%= school.dlugosc %>" required>
+                                <small class="form-text text-muted">Podaj długość geograficzną w formacie dziesiętnym (np. 21.0122). Wartość dodatnia to wschód, ujemna to zachód.</small>
+                            </div>
+                        </div>
+
+                        <!-- Adres -->
+                        <div class="mb-3">
+                            <label for="adres" class="form-label">Adres</label>
+                            <input type="text" class="form-control" id="adres" name="adres" value="<%= school.adres %>" required>
+                        </div>
+
+                        <!-- Telefon -->
+                        <div class="mb-3">
+                            <label for="telefon" class="form-label">Telefon</label>
+                            <input type="tel" class="form-control" id="telefon" name="telefon" value="<%= school.telefon %>" required>
+                        </div>
+
+                        <!-- Opis -->
+                        <div class="mb-3">
+                            <label for="opis" class="form-label">Opis szkoły</label>
+                            <textarea class="form-control" id="opis" name="opis" rows="4" required><%= school.opis %></textarea>
+                        </div>
+
+                        <!-- Sklepik szkolny -->
+                        <div class="mb-3">
+                            <label for="sklepik_szkola" class="form-label">Sklepik szkolny</label>
+                            <select class="form-select" id="sklepik_szkola" name="sklepik_szkola" required>
+                                <option value="0" <%= school.sklepik_szkola === '0' ? 'selected' : '' %>>Nie</option>
+                                <option value="1" <%= school.sklepik_szkola === '1' ? 'selected' : '' %>>Tak</option>
+                                <option value="2" <%= school.sklepik_szkola === '2' ? 'selected' : '' %>>Niewiadomo</option>
+                            </select>
+                        </div>
+
+                        <!-- Przewozy szkolne -->
+                        <div class="mb-3">
+                            <label for="przewozy_szkola" class="form-label">Przewozy szkolne</label>
+                            <select class="form-select" id="przewozy_szkola" name="przewozy_szkola" required>
+                                <option value="0" <%= school.przewozy_szkola === '0' ? 'selected' : '' %>>Nie</option>
+                                <option value="1" <%= school.przewozy_szkola === '1' ? 'selected' : '' %>>Tak</option>
+                                <option value="2" <%= school.przewozy_szkola === '2' ? 'selected' : '' %>>Niewiadomo</option>
+                            </select>
+                        </div>
+
+                        <!-- Pomoc dla osób niepełnosprawnych -->
+                        <div class="mb-3">
+                            <label for="pomoc_niepelnosprawnych" class="form-label">Pomoc dla osób niepełnosprawnych</label>
+                            <select class="form-select" id="pomoc_niepelnosprawnych" name="pomoc_niepelnosprawnych" required>
+                                <option value="0" <%= school.pomoc_niepelnosprawnych === '0' ? 'selected' : '' %>>Nie</option>
+                                <option value="1" <%= school.pomoc_niepelnosprawnych === '1' ? 'selected' : '' %>>Tak</option>
+                                <option value="2" <%= school.pomoc_niepelnosprawnych === '2' ? 'selected' : '' %>>Niewiadomo</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
